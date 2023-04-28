@@ -14,12 +14,15 @@
 
 
     <script>
+
         var pantalla = document.querySelector("canvas");
         var pincel = pantalla.getContext("2d");
         pincel.fillStyle = "lightgrey";
         pincel.fillRect(0, 0, 600, 400);
 
         var radio = 10;
+        var xAleatorio;
+        var yAleatorio;
 
 
         function disenarCircunferencia(x, y, radio, color) {
@@ -38,13 +41,7 @@
 
         var x = 0
 
-        function actualizarPantalla() {
 
-            limpiarPantalla();
-            disenarCircunferencia(x, 20, 10);
-            x++;
-
-        }
 
         function disenarObjetivo(x, y) {
 
@@ -61,26 +58,46 @@
 
         }
 
-        var xAleatorio = sortearPosicion(600);
-        var yAleatorio = sortearPosicion(400);
+        function actualizarPantalla() {
 
-        disenarObjetivo(xAleatorio, yAleatorio);
+            limpiarPantalla();
+            xAleatorio = sortearPosicion(600);
+            yAleatorio = sortearPosicion(400);
+            disenarObjetivo(xAleatorio, yAleatorio);
+            x++;
 
-        //setInterval(actualizarPantalla, 100);
+        }
 
+        setInterval(actualizarPantalla, 1000);
 
+        function disparar(evento) {
 
-        //function exibirMensaje(){
-
-          //  console.log("mostrar mensaje");
-
-        //}
-
-        // setInterval(exibirMensaje,1000);
-
-        // setInterval(disenarCircunferencia(20, 20, 10));
+            var x = evento.PageX - pantalla.offsetLeft;
+            var y = evento.PageY - pantalla.offsetTop;
 
 
+            if ((x < xAleatorio + radio) &&
+                (x > xAleatorio - radio) &&
+                (y < yAleatorio + radio) &&
+                (y > yAleatorio - radio)) {
+                alert("Atinaste");
+
+            }
+        }
+
+        pantalla.onclick = disparar;
+
+
+
+
+
+
+
+
+
+
+       // setInterval(actualizarPantalla, 1000);
+        //disenarObjetivo(xAleatorio, yAleatorio);
 
 
     </script>
